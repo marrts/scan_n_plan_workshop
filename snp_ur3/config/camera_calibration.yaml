@@ -1,0 +1,19 @@
+converged: false
+initial_cost_per_obs: 0.0
+final_cost_per_obs: 0.0
+target_mount_to_target_pos:
+  x: 0.4112288215899613
+  y: 0.008280671994227468
+  z: 0.009576248301722079
+camera_mount_to_camera_pos:
+  x: 0.0
+  y: 0.0
+  z: 0.036
+target_mount_to_target_rpy:
+  x: -3.12533433110147
+  y: 3.141397065707781
+  z: 1.587410485679267
+camera_mount_to_camera_rpy:
+  x: 0.0
+  y: 0.0
+  z: 0.0

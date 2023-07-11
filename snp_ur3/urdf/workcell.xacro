@@ -1,0 +1,130 @@
+<?xml version="1.0" ?>
+<robot name="snp_ur3" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <!-- UR3 Robot Macro -->
+  <xacro:macro name="ur3">
+    <xacro:arg name="name" default="ur3"/>
+    <xacro:arg name="ur_type" default="ur3"/>
+    <xacro:arg name="prefix" default=""/>
+    <xacro:arg name="joint_limit_params" default="$(find ur_description)/config/$(arg ur_type)/joint_limits.yaml"/>
+    <xacro:arg name="kinematics_params" default="$(find ur_description)/config/$(arg ur_type)/default_kinematics.yaml"/>
+    <xacro:arg name="physical_params" default="$(find ur_description)/config/$(arg ur_type)/physical_parameters.yaml"/>
+    <xacro:arg name="visual_params" default="$(find ur_description)/config/$(arg ur_type)/visual_parameters.yaml"/>
+    <xacro:include filename="$(find ur_description)/urdf/ur.urdf.xacro"/>
+  </xacro:macro>
+
+  <xacro:ur3 />
+
+  <!-- Add World -->
+  <material name="light_gray">
+    <color rgba="0.7 0.7 0.7 1"/>
+  </material>
+
+  <material name="dark_gray">
+    <color rgba="0.3 0.3 0.3 1"/>
+  </material>
+  
+  <link name="world"/>
+
+  <!-- Add Floor -->
+  <xacro:property name="length" value="9.0"/>
+  <xacro:property name="width" value="6.0"/>
+  <link name="floor">
+    <visual>
+      <origin xyz="0 -${width/10} 0.001" rpy="0 0 0"/>
+      <geometry>
+        <box size="${length} ${width} 0.001"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 -${width/10} 0.001" rpy="0 0 0"/>
+      <geometry>
+        <box size="${length} ${width} 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="world_to_floor" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <parent link="world"/>
+    <child link="floor"/>
+  </joint>
+
+  <!-- Add table -->
+  <link name="table">
+    <visual>
+      <geometry>
+        <mesh filename="package://snp_ur3/meshes/visual/steel_table.ply"/>
+      </geometry>
+      <material name="dark_gray"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://snp_ur3/meshes/collision/steel_table.ply"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="0 0 0.726" rpy="0 0 0"/>
+      <geometry>
+        <box size="1.9 0.95 0.05"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="floor_to_table" type="fixed">
+    <parent link="floor"/>
+    <child link="table"/>
+  </joint>
+
+  <joint name="table_to_base" type="fixed">
+    <parent link="table"/>
+    <child link="base_link"/>
+    <origin xyz="-0.61 0 0.723" rpy="0 0 0"/>
+  </joint>
+
+  <link name="ee">
+    <visual>
+      <geometry>
+        <mesh filename="package://snp_ur3/meshes/visual/snp_ur3_ee.stl"/>
+      </geometry>
+      <material name="dark_gray"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://snp_ur3/meshes/collision/snp_ur3_ee.stl"/>
+      </geometry>
+      <material name="dark_gray"/>
+    </collision>
+  </link>
+
+  <joint name="tool0_to_ee" type="fixed">
+    <origin xyz="0 0 -0.006" rpy="0 0 ${radians(-17)}"/>
+    <parent link="tool0"/>
+    <child link="ee"/>
+  </joint>
+
+  <xacro:property name="camera_cal" value="${load_yaml('$(find snp_ur3)/config/camera_calibration.yaml')}" />
+
+  <link name="camera_color_optical_frame"/>
+  <joint name="tool0_to_camera" type="fixed">
+    <parent link="tool0"/>
+    <child link="camera_color_optical_frame"/>
+    <origin xyz="${camera_cal['camera_mount_to_camera_pos']['x']} ${camera_cal['camera_mount_to_camera_pos']['y']} ${camera_cal['camera_mount_to_camera_pos']['z']}"
+            rpy="${camera_cal['camera_mount_to_camera_rpy']['x']} ${camera_cal['camera_mount_to_camera_rpy']['y']} ${camera_cal['camera_mount_to_camera_rpy']['z']}" />
+  </joint>
+
+  <link name="cal_target_frame"/>
+  <joint name="target_mount_to_target" type="fixed">
+    <parent link="base_link"/>
+    <child link="cal_target_frame"/>
+    <origin xyz="${camera_cal['target_mount_to_target_pos']['x']} ${camera_cal['target_mount_to_target_pos']['y']} ${camera_cal['target_mount_to_target_pos']['z']}"
+            rpy="${camera_cal['target_mount_to_target_rpy']['x']} ${camera_cal['target_mount_to_target_rpy']['y']} ${camera_cal['target_mount_to_target_rpy']['z']}" />
+  </joint>
+
+  <!-- Add TCP -->
+  <link name="sand_tcp"/>
+  <joint name="sand_tcp_joint" type="fixed">
+    <parent link="ee"/>
+    <child link="sand_tcp"/>
+    <origin xyz="0 0.05 0.025" rpy="${radians(-90)} 0 0"/>
+  </joint>
+</robot>

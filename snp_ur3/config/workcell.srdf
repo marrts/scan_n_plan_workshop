@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This does not replace URDF, and is not an extension of URDF.
+    This is a format for representing semantic information about the robot structure.
+    A URDF file must exist for this robot as well, where the joints and the links that are referenced are defined
+-->
+<robot name="snp_ur3">
+    <group name="manipulator">
+        <chain base_link="base_link" tip_link="tool0"/>
+    </group>
+
+    <!--Groups kinematic plugins -->
+    <kinematics_plugin_config filename="package://snp_ur3/config/workcell_plugins.yaml"/>
+
+    <!-- Contact manager plugins -->
+    <contact_managers_plugin_config filename="package://snp_ur3/config/workcell_plugins.yaml"/>
+
+
+    <!-- UR3 -->
+    <disable_collisions link1="table" link2="base_link_inertia" reason="Never"/>
+    <disable_collisions link1="table" link2="shoulder_link" reason="Never"/>
+    <disable_collisions link1="base_link_inertia" link2="shoulder_link" reason="Adjacent"/>
+    <disable_collisions link1="shoulder_link" link2="upper_arm_link" reason="Adjacent"/>
+    <disable_collisions link1="shoulder_link" link2="wrist_1_link" reason="Never"/>
+    <disable_collisions link1="shoulder_link" link2="wrist_2_link" reason="Never"/>
+    <disable_collisions link1="upper_arm_link" link2="forearm_link" reason="Adjacent"/>
+    <disable_collisions link1="forearm_link" link2="wrist_1_link" reason="Adjacent"/>
+    <disable_collisions link1="wrist_1_link" link2="wrist_2_link" reason="Adjacent"/>
+    <disable_collisions link1="wrist_1_link" link2="wrist_3_link" reason="Never"/>
+    <disable_collisions link1="wrist_2_link" link2="wrist_3_link" reason="Adjacent"/>
+    <disable_collisions link1="wrist_3_link" link2="ee" reason="Adjacent"/>
+</robot>
+
