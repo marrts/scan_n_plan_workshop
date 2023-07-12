@@ -13,7 +13,7 @@
   <arg name="reference_frame" default="base_link"/>
   <!-- Set the default name of the follow joint trajectory action depending on whether the robot is simulated (i.e., ros2_control) or real hardware is being used -->
   <arg name="follow_joint_trajectory_action" default="joint_trajectory_position_controller/follow_joint_trajectory" if="$(var sim_robot)"/>
-  <arg name="follow_joint_trajectory_action" default="joint_trajectory_action" unless="$(var sim_robot)"/>
+  <arg name="follow_joint_trajectory_action" default="scaled_pos_joint_traj_controller/follow_joint_trajectory" unless="$(var sim_robot)"/>
 
   <!-- URDF, Rviz -->
   <include file="$(find-pkg-share snp_ur3)/launch/test.launch.xml">
@@ -33,12 +33,16 @@
     <param name="robot_description" value="$(var robot_description)"/>
     <param name="robot_description_semantic" value="$(var robot_description_semantic)"/>
     <!-- TSDF parameters -->
-    <param name="tsdf.min.x" value="0.21"/>
-    <param name="tsdf.min.y" value="-0.45"/>
-    <param name="tsdf.min.z" value="0.112"/>
-    <param name="tsdf.max.x" value="1.51"/>
+    <param name="live" value="true"/>
+    <param name="tsdf.voxel_length" value="0.005"/>
+    <param name="tsdf.sdf_trunc" value="0.02"/>
+    <param name="tsdf.min.x" value="-0.25"/>
+    <param name="tsdf.min.y" value="0.15"/>
+    <param name="tsdf.min.z" value="0.015"/>
+    <param name="tsdf.max.x" value="0.25"/>
     <param name="tsdf.max.y" value="0.45"/>
-    <param name="tsdf.max.z" value="0.527"/>
+    <param name="tsdf.max.z" value="0.25"/>
+    <param name="rgbd.depth_trunc" value="0.5"/>
   </node>
 
   <!-- Launch Calibration Node and Mutable Transform Publisher Node  -->
@@ -51,14 +55,11 @@
       <param name="color_image_topic" value="/camera/color/image_raw"/>
       <param name="camera_info_topic" value="/camera/color/camera_info"/>
       <param name="cache_count" value="1"/>
-      <param name="slop" value="0.05"/>
+      <param name="slop" value="0.1"/>
     </node>
     <include file="$(find-pkg-share realsense2_camera)/launch/rs_launch.py">
       <arg name="align_depth" value="true"/>
       <arg name="enable_pointcloud" value="true"/>
-      <arg name="color_width" value="640"/>
-      <arg name="color_height" value="360"/>
-      <arg name="color_fps" value="90.0"/>
     </include>
   </group>
 
@@ -87,6 +88,7 @@
   <!-- Launch Motion Execution Node -->
   <node pkg="snp_motion_execution" exec="snp_motion_execution_node">
     <param name="follow_joint_trajectory_action" value="$(var follow_joint_trajectory_action)"/>
+    <param name="enable_required" value="False"/>
   </node>
 
   <group unless="$(var sim_robot)">
