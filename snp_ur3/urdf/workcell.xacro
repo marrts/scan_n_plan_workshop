@@ -97,7 +97,7 @@
   </link>
 
   <joint name="tool0_to_ee" type="fixed">
-    <origin xyz="0 0 -0.006" rpy="0 0 ${radians(-17)}"/>
+    <origin xyz="0 0 -0.006" rpy="0 0 ${radians(73)}"/>
     <parent link="tool0"/>
     <child link="ee"/>
   </joint>
@@ -106,7 +106,7 @@
 
   <link name="camera_color_optical_frame"/>
   <joint name="tool0_to_camera" type="fixed">
-    <parent link="tool0"/>
+    <parent link="ee"/>
     <child link="camera_color_optical_frame"/>
     <origin xyz="${camera_cal['camera_mount_to_camera_pos']['x']} ${camera_cal['camera_mount_to_camera_pos']['y']} ${camera_cal['camera_mount_to_camera_pos']['z']}"
             rpy="${camera_cal['camera_mount_to_camera_rpy']['x']} ${camera_cal['camera_mount_to_camera_rpy']['y']} ${camera_cal['camera_mount_to_camera_rpy']['z']}" />
