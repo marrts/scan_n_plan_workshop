@@ -102,11 +102,11 @@
     <child link="ee"/>
   </joint>
 
-  <xacro:property name="camera_cal" value="${load_yaml('$(find snp_ur3)/config/camera_calibration.yaml')}" />
+  <xacro:property name="camera_cal" value="${load_yaml('$(find snp_ur3)/config/calibration.yaml')}" />
 
   <link name="camera_color_optical_frame"/>
   <joint name="tool0_to_camera" type="fixed">
-    <parent link="ee"/>
+    <parent link="tool0"/>
     <child link="camera_color_optical_frame"/>
     <origin xyz="${camera_cal['camera_mount_to_camera_pos']['x']} ${camera_cal['camera_mount_to_camera_pos']['y']} ${camera_cal['camera_mount_to_camera_pos']['z']}"
             rpy="${camera_cal['camera_mount_to_camera_rpy']['x']} ${camera_cal['camera_mount_to_camera_rpy']['y']} ${camera_cal['camera_mount_to_camera_rpy']['z']}" />
