@@ -439,13 +439,13 @@ private:
 
       // Convert to joint trajectory
       tesseract_common::JointTrajectory jt = toJointTrajectory(program_results);
-      tesseract_common::JointTrajectory tcp_velocity_scaled_jt = tcpSpeedLimiter(jt, MAX_TCP_SPEED, "tool0");
+      //      tesseract_common::JointTrajectory tcp_velocity_scaled_jt = tcpSpeedLimiter(jt, MAX_TCP_SPEED, "tool0");
 
       // Send joint trajectory to Tesseract plotter widget
       plotter_->plotTrajectory(jt, *env_->getStateSolver());
 
       // Return results
-      res->motion_plan = tesseract_rosutils::toMsg(tcp_velocity_scaled_jt, env_->getState());
+      res->motion_plan = tesseract_rosutils::toMsg(jt, env_->getState());
       res->message = "Succesfully planned motion";
       res->success = true;
     }
