@@ -131,7 +131,7 @@ SNPWidget::SNPWidget(rclcpp::Node::SharedPtr node, QWidget* parent)
   start_scan_request_->relative_frame = reference_frame_;
   start_scan_request_->translation_distance = 0;
   start_scan_request_->rotational_distance = 0;
-  start_scan_request_->live = true;
+  start_scan_request_->live = declareAndGet<bool>(*node, "live", true);
   start_scan_request_->rgbd_params.convert_rgb_to_intensity = false;
   // Configurable parameters
   start_scan_request_->tsdf_params.voxel_length = declareAndGet<float>(*node, "tsdf.voxel_length", 0.01f);
