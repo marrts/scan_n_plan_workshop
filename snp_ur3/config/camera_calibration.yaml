@@ -6,7 +6,7 @@ target_mount_to_target_pos:
   y: 0.008280671994227468
   z: 0.009576248301722079
 camera_mount_to_camera_pos:
-  x: 0.0
+  x: 0.01
   y: 0.0
   z: 0.036
 target_mount_to_target_rpy:
