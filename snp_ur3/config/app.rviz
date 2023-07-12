@@ -194,7 +194,7 @@ Visualization Manager:
         Durability Policy: Volatile
         History Policy: Keep Last
         Reliability Policy: Reliable
-        Value: /open3d_mesh
+        Value: /industrial_reconstruction_mesh
       Value: true
     - Class: tesseract_rviz/TesseractWorkbench
       Enabled: true
