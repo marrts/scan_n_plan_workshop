@@ -12,6 +12,7 @@ install(
             config
             urdf
             meshes
+            calibration
   DESTINATION share/${PROJECT_NAME}/)
 
 ament_package()
