@@ -18,7 +18,6 @@ using FJT_Goal = control_msgs::action::FollowJointTrajectory_Goal;
 template <typename T>
 T get(rclcpp::Node* node, const std::string& key)
 {
-  node->declare_parameter(key);
   T val;
   if (!node->get_parameter(key, val))
     throw std::runtime_error("Failed to get '" + key + "' parameter");
@@ -31,6 +30,10 @@ public:
   explicit MotionExecNode()
     : Node("motion_execution_node"), cb_group_(create_callback_group(rclcpp::CallbackGroupType::Reentrant))
   {
+    this->declare_parameter("follow_joint_trajectory_action");
+    this->declare_parameter("enable_required", true);
+    enable_required_ = get<bool>(this, "enable_required");
+
     const std::string fjt_action = get<std::string>(this, "follow_joint_trajectory_action");
     fjt_client_ = rclcpp_action::create_client<control_msgs::action::FollowJointTrajectory>(this, fjt_action);
 
@@ -56,6 +59,7 @@ private:
   rclcpp::Service<snp_msgs::srv::ExecuteMotionPlan>::SharedPtr server_;
   rclcpp::CallbackGroup::SharedPtr cb_group_;
   std::mutex mutex_;
+  bool enable_required_;
 
   void callbackJointState(const sensor_msgs::msg::JointState::SharedPtr state)
   {
@@ -85,6 +89,7 @@ private:
       }
 
       // enable robot
+      if (enable_required_)
       {
         RCLCPP_INFO(get_logger(), "Enabling robot");
         if (!enable_client_->service_is_ready())
