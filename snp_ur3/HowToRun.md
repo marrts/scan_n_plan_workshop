@@ -68,6 +68,8 @@
 2. Go back to step 4 to redraw your process area.
 3. Replace or move the part and restart back at step 1. 
 
+<div style="page-break-after: always;"></div>
+
 ## Troubleshooting
 *If any of these troubleshooting process don't work call Tyler or Michael 
 
@@ -112,7 +114,7 @@ You are probably experiencing some form of communication error with the robot
   - Set the expected incoming (I don't remember the exact name) IP address to `192.168.1.17`
 
 ### The robot isn't moving at all
-Ensure the robot is in the right spot, if not then go to **I turned everything on but the robot I see in RVIZ doesn't match real life**
+Ensure the virtual robot matches the physical robot, if not then go to **I turned everything on but the robot I see in RVIZ doesn't match real life**
 If the robot is in the right spot, but it still isn't moving when it should try the following
 - Ensure the program on the teach pendant is running
   - If it is not press play and then try again
