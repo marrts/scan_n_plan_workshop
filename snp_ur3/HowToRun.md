@@ -71,7 +71,7 @@
 ## Troubleshooting
 *If any of these troubleshooting process don't work call Tyler or Michael 
 
-### How do I kill software running?
+### Restarting the software
 - Press the stop square on the UR teach pendant (if it is not already grey)
 - There should be 3 terminals running software on the computer
 - Type `ctrl+c` in all of them to kill them 
@@ -82,7 +82,7 @@ You are probably experiencing some form of communication error with the robot
 - Ensure you have an ethernet connection between the computer and the UR
 - If you already did then try switching to a different port on the computer
   - If you unplug it then you will need to restart all of your applications
-  - Execute the steps in **How do I kill software running?**
+  - Execute the steps in **Restarting the software**
   - Restart from step 7 of the **Starting Up** Section
 - If you want to confirm communication with the UR3
   - Open a terminal from the sidebar (or press `ctrl+alt+t`)
@@ -116,10 +116,10 @@ Ensure the robot is in the right spot, if not then go to **I turned everything o
 If the robot is in the right spot, but it still isn't moving when it should try the following
 - Ensure the program on the teach pendant is running
   - If it is not press play and then try again
-  - If still does not work then execute the steps from **How do I kill software running?** and restart from step 7 of the **Starting Up** section
+  - If still does not work then execute the steps from **Restarting the software** and restart from step 7 of the **Starting Up** section
 - Ensure the program running on the teach pendant is `Automate23.urp`
-  - If not execute the steps from **How do I kill software running?** and restart from step 6 of the **Starting Up** section
-- If all else fails then execute **How do I kill software running?** and restart from step 5 of the **Starting Up** section
+  - If not execute the steps from **Restarting the software** and restart from step 6 of the **Starting Up** section
+- If all else fails then execute **Restarting the software** and restart from step 5 of the **Starting Up** section
 
 ### The robot started the scan trajectory and then just stopped
 - Try clicking the `Get Detailed Scan` button again
@@ -136,7 +136,7 @@ If the robot is in the right spot, but it still isn't moving when it should try 
 - You may need to switch USB ports, it requires a USB3 connection. 
   - I think usually the top left one on the computer works well
 - If still no point cloud is showing up 
-  - Do **How do I kill software running?**
+  - Do **Restarting the software**
   - Open a terminal by clicking on the side-panel or pressing `ctrl+alt+t`
   - Type `realsense-viewer` to bring up the realsense interactive application
   - If the camera is connected you'll see it on the left side of your screen and you should be able to turn it on and turn on 3D data to see what it sees
@@ -158,7 +158,7 @@ If the robot is in the right spot, but it still isn't moving when it should try 
   - Try making a bigger region for the toolpaths (see **Running the Application** step 4 for details on how to reselect a region)
 - Ensure there is an application running on the left called `snp_tpp_app`. It will likely have an invisible logo, but should have an orange dot next to it and display the name when you hover over it
   - If you don't see this application then something happened that caused it to die
-  - Restart everything by executing **How do I kill software running** and then starting from step 7 of **Starting up**
+  - Restart everything by executing **Restarting the software** and then starting from step 7 of **Starting up**
 
 ### When I click `Generate Tool Path` there are waypoints all over the place or they just look messy
 - Be careful with the region you've drawn
@@ -177,10 +177,10 @@ If the robot is in the right spot, but it still isn't moving when it should try 
 - Make sure a successful motion plan has been planned
 - Go do the optional step 9 from **Running the Application** and verify that the most recent trajectory (the bottom one on the list) matches the expected behavior
 - If a motion preview that matches exists and it still won't execute then
-  - Do **How do I kill software running?**
+  - Do **Restarting the software**
   - Restart at step 7. on the **Starting Up** section
 
 ### The robot was protective or E-stopped
 - Clear the stop
-- Do **How do I kill software running?**
+- Do **Restarting the software**
 - Start from step 7 or **Starting Up**
